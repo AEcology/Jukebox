@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
@@ -9,7 +10,8 @@ public class Jukebox {
 	Map<Integer, StudentRecord> studentRecords;
 	GregorianCalendar dateLastPlayed; //used to reset new days
 	public Jukebox(){
-		
+		dateLastPlayed = new GregorianCalendar();
+		loggedStudent = null;
 	}
 	public boolean login(int ID){
 		if (!studentRecords.containsKey(ID))
@@ -20,11 +22,27 @@ public class Jukebox {
 	//External play function: return false if we cannot play song
 	public boolean requestSong(String name){
 		//TODO: If new day, clear song counts in system
-		//TODO
-		return false;
+		GregorianCalendar today = new GregorianCalendar();
+		if (!sameDay(today, dateLastPlayed)){
+			 for(Map.Entry<Integer, StudentRecord> s:studentRecords.entrySet()){
+				 s.getValue().resetDay();
+			 }
+			 songs.resetDay();
+		}
+		dateLastPlayed = today;
+		if (!songs.canPlay(name))
+			return false;
+		else queueSong(name);
+		return true;
+	}
+	//Rick's implementation of finding day differences:
+	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
+		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
+		        && today.get(Calendar.MONTH) == other.get(Calendar.MONTH)
+		        && today.get(Calendar.DAY_OF_MONTH) == other.get(Calendar.DAY_OF_MONTH);
 	}
 	//Internal to Jukebox: play the song
-	private boolean playSong(String name){
+	private boolean queueSong(String name){
 		//TODO
 		return false;
 	}
