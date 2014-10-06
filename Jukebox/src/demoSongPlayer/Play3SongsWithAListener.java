@@ -33,7 +33,7 @@ public class Play3SongsWithAListener {
 
 		JOptionPane.showMessageDialog(null, "Play short aif file");
 		SongPlayer.playFile(waiter, baseDir + "flute.aif");
-
+		
 		JOptionPane.showMessageDialog(null, "Play tada.wav");
 		SongPlayer.playFile(waiter, baseDir + "tada.wav");
 

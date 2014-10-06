@@ -23,11 +23,13 @@ public class SongCollection implements TableModel{
 		tableModelListeners = new LinkedList<TableModelListener>();
 		
 		//Initializing known songs
-	    add("Song1");
-	    add("Song2");
-	    add("Song3");
-	    add("Song4");
-	    add("Song5");
+	    add("BlueRidgeMountainMist.mp3");
+	    add("DeterminedTumbao.mp3");
+	    add("flute.aif");
+	    add("spacemusic.au");
+	    add("StringCheese.mp3");
+	    add("tada.wav");
+	    add("UntameableFire.mp3");
 	}
 	
 	//Add new song to the collection
