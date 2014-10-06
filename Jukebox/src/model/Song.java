@@ -1,10 +1,26 @@
 package model;
 
+/**
+ * The Song class contains the name of the song, how many times it has played on a given day, and the length
+ * of the song.
+ * 
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
+ *
+ */
 public class Song {
 	String name;
 	int playsToday;
-	double songLengthMinutes;
-	public String getName(){
+	int songLengthSeconds;
+	
+	public Song(String name){
+		this.name = name;
+	}
+	
+	public String getArtist(){
+		return "Artist";
+	}
+	public String getTitle(){
 		return this.name;
 	}
 	public boolean canPlayToday(){
@@ -16,11 +32,17 @@ public class Song {
 	public void incrementPlayCount(){
 		++playsToday;
 	}
-	public double getSongLength(){
-		return songLengthMinutes;
+	public int getSongLength(){
+		return songLengthSeconds;
 	}
+	
+	//TODO: fill or delete if unnecessary	
 	public boolean play(){
-		//TODO: fill or delete if unnecessary
-		return false;
+		if(canPlayToday()){
+			incrementPlayCount();
+			return true;
+		}
+		else
+			return false;
 	}
 }
