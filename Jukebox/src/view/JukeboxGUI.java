@@ -2,16 +2,19 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+
+
 
 //import model.Jukebox;
 import model.SongCollection;
@@ -23,25 +26,21 @@ public class JukeboxGUI extends JFrame {
 //	private Jukebox jukebox;
 	private SongCollection songCollection;
 	
-	//TODO : Write listeners that interact with the jukebox
-//	private class AddStudentListener implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			try
-//			{
-//				String first = JOptionPane.showInputDialog("Enter the Student's first name");
-//				String second = JOptionPane.showInputDialog("Enter " + first + "'s Last name");
-//				long id = Long.parseLong(JOptionPane.showInputDialog("Enter " + first + "'s ID #"));
-//				double gpa = Double.parseDouble(JOptionPane.showInputDialog("Enter " + first + "'s GPA"));
-//				students.add(new Student(first, second, id, gpa));
-//			}
-//			catch (Exception err)
-//			{
-//				JOptionPane.showMessageDialog(null, "Error! Invalid Input");
-//			}
-//		}
-//	}
+	//Listener for JTable that interacts with the jukebox
+	class SongSelectionListener implements ListSelectionListener {
+		
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			int rowIndex = table.getSelectionModel().getLeadSelectionIndex();
+			int colIndex = 1;
+			
+			//Trigger on mouse depress only
+			if(table.getSelectionModel().getValueIsAdjusting() == false){
+				Object returns = table.getModel().getValueAt(rowIndex, colIndex);
+				System.out.println((String)returns);
+			}
+		}
+	}	
 	
 	public JukeboxGUI()
 	{
@@ -53,9 +52,8 @@ public class JukeboxGUI extends JFrame {
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 		
 		// TODO: add Table listeners
-//		add = new JButton("Add");
-//		add.addActionListener(new AddStudentListener());
-	
+	    table.getSelectionModel().addListSelectionListener(new SongSelectionListener()); 
+	   
 		// JFrame setup
 		this.setLayout(new GridLayout(1, 2));
 	
