@@ -31,11 +31,16 @@ public class JukeboxGUI extends JFrame {
 		
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			int rowIndex = table.getSelectionModel().getLeadSelectionIndex();
-			int colIndex = 1;
-			
+
 			//Trigger on mouse depress only
 			if(table.getSelectionModel().getValueIsAdjusting() == false){
+				
+				//Getting row and col info
+				int rowIndex = table.getSelectedRow();
+				rowIndex = table.convertRowIndexToView(rowIndex);
+				int colIndex = 1;
+				
+				//Printing song title at that row and col
 				Object returns = table.getModel().getValueAt(rowIndex, colIndex);
 				System.out.println((String)returns);
 			}
