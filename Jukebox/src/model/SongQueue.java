@@ -28,7 +28,7 @@ public class SongQueue {
 		
 		//If no song currently playing, play the song just added
 		if(songQueue.size() == 1)
-			SongPlayer.playFile(waiter, "./songfiles/" + song.getTitle());
+			SongPlayer.playFile(waiter, "./songfiles/" + song.getFileName());
 	}
 	
 	public Song pop(){
@@ -54,7 +54,7 @@ public class SongQueue {
 			//Remove just played song from the stack, and start next song
 			pop();
 			if(!songQueue.isEmpty())
-				SongPlayer.playFile(waiter, "./songfiles/" + peek().getTitle());	
+				SongPlayer.playFile(waiter, "./songfiles/" + peek().getFileName());	
 		}
 	}
 }

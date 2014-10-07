@@ -9,19 +9,30 @@ package model;
  *
  */
 public class Song {
-	String name;
-	int playsToday;
+	String artist;
+	String title;
+	String fileName;
 	int songLengthSeconds;
+	int playsToday;
 	
-	public Song(String name){
-		this.name = name;
+	public Song(String artist, String title, int songLengthSeconds, String fileName){
+		this.artist = artist;
+		this.title = title;
+		this.songLengthSeconds = songLengthSeconds;
+		this.fileName = fileName;
 	}
 	
 	public String getArtist(){
-		return "Artist";
+		return artist;
 	}
 	public String getTitle(){
-		return this.name;
+		return title;
+	}
+	public int getSongLength(){
+		return songLengthSeconds;
+	}	
+	public String getFileName(){
+		return fileName;
 	}
 	public boolean canPlayToday(){
 		return playsToday<5;
@@ -31,9 +42,6 @@ public class Song {
 	}
 	public void incrementPlayCount(){
 		++playsToday;
-	}
-	public int getSongLength(){
-		return songLengthSeconds;
 	}
 	public void clearPlaysToday(){
 		playsToday = 0;

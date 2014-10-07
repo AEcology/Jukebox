@@ -23,9 +23,9 @@ public class QueueAndPlay3SongsInOrder {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				SongQueue songQueue = new SongQueue();
-				songQueue.add(new Song("flute.aif"));
-				songQueue.add(new Song("spacemusic.au"));
-				songQueue.add(new Song("tada.wav"));
+				songQueue.add(new Song("Sun Microsystems", "Flute", 5, "flute.aif"));
+				songQueue.add(new Song("Unknown", "Space Music", 6, "spacemusic.au"));
+				songQueue.add(new Song("Microsoft", "Tada", 2, "tada.wav"));
 			}
 		});
 	}

@@ -13,36 +13,32 @@ import javax.swing.table.TableModel;
 public class SongCollection implements TableModel{
 	private ArrayList<Song> songs;
 	private LinkedList<TableModelListener> tableModelListeners;
-
-	public static String baseDir = System.getProperty("user.dir")
-			+ System.getProperty("file.separator") + "songfiles"
-			+ System.getProperty("file.separator");
 	
 	public SongCollection(){
 		songs = new ArrayList<Song>();
 		tableModelListeners = new LinkedList<TableModelListener>();
 		
 		//Initializing known songs
-	    add("BlueRidgeMountainMist.mp3");
-	    add("DeterminedTumbao.mp3");
-	    add("flute.aif");
-	    add("spacemusic.au");
-	    add("StringCheese.mp3");
-	    add("tada.wav");
-	    add("UntameableFire.mp3");
+		add("Ralph Schuckett", "Blue Ridge Mountain Mist", 38, "BlueRidgeMountainMist.mp3");
+	    add("FreePlay Music", "Determined Tumbao", 20, "DeterminedTumbao.mp3");
+	    add("Sun Microsystems", "Flute", 5, "flute.aif");
+	    add("Unknown", "Space Music", 6, "spacemusic.au");
+	    add("FreePlay Music", "Swing Cheese", 15, "StringCheese.mp3");
+	    add("Microsoft", "Tada", 2, "tada.wav");
+	    add("Pierre Langer", "Untameable Fire", 282, "UntameableFire.mp3");
 	}
 	
 	//Add new song to the collection
-	public void add(String songName){
+	public void add(String artist, String title, int songLengthSeconds, String fileName){
 		
 		//If already contains, exit
 		for(Song eachSong: songs){
-			if(eachSong.getTitle() == songName)
+			if(eachSong.getTitle() == title)
 				return;
 		}
 		
 		//Create the new song object
-		Song song = new Song(songName);
+		Song song = new Song(artist, title, songLengthSeconds, fileName);
 		
 		//Add song object to collection
 		songs.add(song);
@@ -130,8 +126,3 @@ public class SongCollection implements TableModel{
 		tableModelListeners.remove(l);
 	}
 }
-
-
-
-
-
