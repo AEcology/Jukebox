@@ -23,8 +23,9 @@ public class StudentCollection {
 	public Student getStudent(String ID, String password) {
 		
 		for(Student eachStudent: studentCollection){
-			if(eachStudent.getID() == ID && eachStudent.getPassword() == password)
+			if((eachStudent.getID()).equals(ID) && (eachStudent.getPassword()).equals(password)){
 				return eachStudent;
+			}
 		}
 		return null;
 	}

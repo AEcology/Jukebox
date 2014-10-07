@@ -10,11 +10,10 @@ import javax.swing.table.TableModel;
 public class SongCollection implements TableModel{
 	private ArrayList<Song> songs;
 	private LinkedList<TableModelListener> tableModelListeners;
-	
+
 	public SongCollection(){
 		songs = new ArrayList<Song>();
 		tableModelListeners = new LinkedList<TableModelListener>();
-		
 		//Initializing known songs
 		add("Ralph Schuckett", "Blue Ridge Mountain Mist", 38, "BlueRidgeMountainMist.mp3");
 	    add("FreePlay Music", "Determined Tumbao", 20, "DeterminedTumbao.mp3");

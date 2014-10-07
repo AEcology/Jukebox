@@ -9,13 +9,39 @@ public class Jukebox {
 	private SongQueue songQueue;
 	private SongCollection songCollection;
 	private GregorianCalendar dateLastPlayed; //used to reset new days
+	private String statusMessage;
+	private Song currSong;
+	
+	//update status text message at bottom of GUI
+	private void updateStatus(){
+		if (songQueue.peek()==null)
+			statusMessage = "Select a song to play!";
+		else{
+			statusMessage = "Up next: " + songQueue.peek().title;
+		}
+	}
+	
+	public SongCollection getSongCollection(){
+		return songCollection;
+	}
+	
+	public String getStatus(){
+		return statusMessage;
+	}
 	
 	public Jukebox(){
+		statusMessage = "Select a song to play!";
 		loggedStudent = null;
+		currSong = null;
 		studentCollection = new StudentCollection();
 		songQueue = new SongQueue();
 		songCollection = new SongCollection();
 		dateLastPlayed = new GregorianCalendar();
+	}
+	
+	//Returns logged in student (just used by model to see if anyone is logged in)
+	public Student getLoggedStudent(){
+		return loggedStudent;
 	}
 	
 	public boolean login(String ID, String password){
@@ -53,7 +79,7 @@ public class Jukebox {
 			return false;
 		
 		//If user play limit reached
-		if(!loggedStudent.canPlayToday())
+		if(loggedStudent==null || !loggedStudent.canPlayToday())
 			return false;		
 		
 		//If user has enough time left to play

@@ -1,0 +1,13 @@
+package view;
+
+
+//Used by view to determine whether to display student GUI or playlist GUI
+public enum ModelMode {
+	PLAYMODE		(0),
+	ACCOUNTMODE		(1);
+	
+	private final int value;
+	ModelMode(int mode){
+		this.value = mode;
+	}
+}
