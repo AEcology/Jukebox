@@ -45,11 +45,11 @@ public class SongQueue {
 	private class ObjectWaitingForSongToEnd implements EndOfSongListener {
 
 		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
-			System.out.print("Finished " + eosEvent.fileName());
-			GregorianCalendar finishedAt = eosEvent.finishedTime();
-			System.out.println(" at " + finishedAt.get(Calendar.HOUR_OF_DAY) + ":"
-					+ finishedAt.get(Calendar.MINUTE) + ":"
-					+ finishedAt.get(Calendar.SECOND));
+//			System.out.print("Finished " + eosEvent.fileName());
+//			GregorianCalendar finishedAt = eosEvent.finishedTime();
+//			System.out.println(" at " + finishedAt.get(Calendar.HOUR_OF_DAY) + ":"
+//					+ finishedAt.get(Calendar.MINUTE) + ":"
+//					+ finishedAt.get(Calendar.SECOND));
 			
 			//Remove just played song from the stack, and start next song
 			pop();

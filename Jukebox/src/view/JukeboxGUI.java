@@ -56,7 +56,7 @@ public class JukeboxGUI extends JFrame {
 		table = new JTable(songCollection);
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 		
-		// TODO: add Table listeners
+		// Add Table listener
 	    table.getSelectionModel().addListSelectionListener(new SongSelectionListener()); 
 	   
 		// JFrame setup

@@ -1,14 +1,21 @@
 package test;
 
 import static org.junit.Assert.*;
+
+import javax.swing.event.TableModelListener;
+
 import model.Jukebox;
 import model.Song;
+import model.SongCollection;
+import model.SongQueue;
+import model.StudentCollection;
 
 import org.junit.Test;
 
 //Attempting to Simulate the possible interactions between the jukebox and the GUI
 public class JukeboxTest {
 
+	///////////////////Jukebox Testing/////////////////
 	@Test
 	public void testLogin(){
 		Jukebox jukebox = new Jukebox();
@@ -50,7 +57,7 @@ public class JukeboxTest {
 		assertEquals(false, jukebox.requestSong("Blue Ridge ... Mist"));
 	}		
 	
-	//Song Testing
+	/////////////////////Song Testing////////////////////
 	@Test
 	public void testSongGetArtist(){
 		Song song = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
@@ -107,4 +114,81 @@ public class JukeboxTest {
 		song.incrementPlayCount();
 		assertEquals(false, song.canPlayToday());
 	}
+	
+	
+	///////////////////////SongCollection Tests/////////////////////////
+	@Test
+	public void testClearSongPlaysTodayForSongCollection(){
+		SongCollection songCollection = new SongCollection();
+		Song song = songCollection.getSong("Blue Ridge Mountain Mist");
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		assertEquals(false, song.canPlayToday());
+		
+		songCollection.clearSongPlaysToday();
+		assertEquals(true, song.canPlayToday());		
+	}
+	
+	@Test
+	public void testSongCollectionTableModelMethods(){
+		SongCollection songCollection = new SongCollection();
+		
+		assertEquals(7, songCollection.getRowCount());
+		assertEquals(3, songCollection.getColumnCount());
+		assertEquals("Artist", songCollection.getColumnName(0));
+		assertEquals("Title", songCollection.getColumnName(1));
+		assertEquals("Seconds", songCollection.getColumnName(2));
+		assertEquals(null, songCollection.getColumnName(3));
+		
+		assertEquals(String.class, songCollection.getColumnClass(0));
+		assertEquals(String.class, songCollection.getColumnClass(1));
+		assertEquals(Integer.class, songCollection.getColumnClass(2));
+		assertEquals(null, songCollection.getColumnClass(3));
+
+		assertEquals(false, songCollection.isCellEditable(0, 0));
+		
+		assertEquals("FreePlay Music", songCollection.getValueAt(1,0));
+		assertEquals("Determined Tumbao", songCollection.getValueAt(1,1));
+		assertEquals(20, songCollection.getValueAt(1,2));
+		assertEquals(null, songCollection.getValueAt(1,3));
+	}
+	
+	@Test
+	public void testAddDuplicateSong(){
+		SongCollection songCollection = new SongCollection();
+		assertEquals(7, songCollection.getRowCount());
+		songCollection.add("Microsoft", "Tada", 2, "tada.wav");
+		assertEquals(7, songCollection.getRowCount());
+	}
+
+	@Test
+	public void justNeedOneMorePercentCoverage(){
+			//TODO
+	}
+	
+	
+	///////////////////////SongQueue Tests/////////////////////////
+	@Test
+	public void testPopAndPeek(){
+		SongQueue songQueue = new SongQueue();
+		assertEquals(null, songQueue.pop());
+		assertEquals(null, songQueue.peek());
+		
+		Song someSong = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
+		songQueue.add(someSong);
+		assertEquals(someSong, songQueue.peek());
+		assertEquals(someSong, songQueue.pop());
+		assertEquals(null, songQueue.peek());
+	}
+	
+	
+	///////////////////StudentCollection Tests////////////////////
+	@Test
+	public void testClearSongsPlayedToday(){
+		//TODO
+
+	}	
 }
