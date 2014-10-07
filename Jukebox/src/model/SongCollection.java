@@ -55,28 +55,21 @@ public class SongCollection implements TableModel{
 		}
 	}	
 	
+	//Return Song if exists, null otherwise
+	public Song getSong(String name){
+		
+		for(Song eachSong: songs){
+			if(eachSong.getTitle() == name)
+				return eachSong;
+		}
+		return null;
+	}
 	
-	
-	
-	// TODO: Remove. Students are only able to select songs that they see on GUI. UNNEEDED
-//	public Song getSong(String name){
-//		if (!songs.containsKey(name))
-//			return null;
-//		else
-//			return songs.get(name);
-//	}
-//	public boolean canPlay(String name){
-//		if (!songs.containsKey(name))
-//			return false;
-//		Song sng = songs.get(name);
-//		return sng.canPlayToday();
-//	}
-//	public void resetDay(){
-//		for (HashMap.Entry<String,Song> s:songs.entrySet()){
-//			s.getValue().reset();
-//		}
-//	}
-	
+	public void clearSongPlaysToday() {
+		for(Song eachSong: songs){
+			eachSong.clearPlaysToday();
+		}
+	}
 	
 /////////////////////////////TableModel Interface/////////////////////////////////
 	@Override

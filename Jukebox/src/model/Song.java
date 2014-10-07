@@ -35,14 +35,7 @@ public class Song {
 	public int getSongLength(){
 		return songLengthSeconds;
 	}
-	
-	//TODO: fill or delete if unnecessary	
-	public boolean play(){
-		if(canPlayToday()){
-			incrementPlayCount();
-			return true;
-		}
-		else
-			return false;
+	public void clearPlaysToday(){
+		playsToday = 0;
 	}
 }

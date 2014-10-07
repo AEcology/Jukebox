@@ -1,5 +1,8 @@
 package demoSongPlayer;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import model.Song;
 import model.SongQueue;
 
@@ -13,6 +16,9 @@ import model.SongQueue;
 public class QueueAndPlay3SongsInOrder {
 
 	public static void main(String[] args) {
+		GregorianCalendar today = new GregorianCalendar();
+		System.out.println(today.get(Calendar.DATE));
+		
 		// Assign the responsibility of queuing Songs and playing them in order, and not overlapping
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
