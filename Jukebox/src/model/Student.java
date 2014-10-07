@@ -24,8 +24,11 @@ public class Student {
 	public String getPassword() {
 		return this.password;
 	}
+	public int getPlayCount(){
+		return songsPlayedToday;
+	}
 	public boolean canPlayToday() {
-		return songsPlayedToday < 5;
+		return songsPlayedToday < 2;
 	}
 	public void incrementPlayCount(){
 		++songsPlayedToday;

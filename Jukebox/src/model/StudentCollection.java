@@ -8,6 +8,10 @@ public class StudentCollection {
 	
 	public StudentCollection(){
 		studentCollection = new ArrayList<Student>();
+		addStudent("Ali", "1111");
+		addStudent("Chris", "2222");
+		addStudent("River", "3333");
+		addStudent("Ryan", "4444");	   
 	}
 	
 	//For adding a student who does not exist

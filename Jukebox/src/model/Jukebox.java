@@ -69,6 +69,7 @@ public class Jukebox {
 		
 		//Add the song to the queue
 		songQueue.add(toPlay);
+		
 		return true;
 	}
 	
