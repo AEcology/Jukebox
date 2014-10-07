@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 import model.Jukebox;
+import model.Song;
 
 import org.junit.Test;
 
@@ -49,6 +50,61 @@ public class JukeboxTest {
 		assertEquals(false, jukebox.requestSong("Blue Ridge ... Mist"));
 	}		
 	
-
+	//Song Testing
+	@Test
+	public void testSongGetArtist(){
+		Song song = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
+		assertEquals("Sun Microsystems", song.getArtist());
+	}
 	
+	@Test
+	public void testSongPlayCountLimit(){
+		Song song = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
+		
+		//0 plays today
+		assertEquals(true, song.canPlayToday());
+		
+		//1 play today
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		
+		//2 plays today
+		song.incrementPlayCount();		
+		assertEquals(true, song.canPlayToday());
+		
+		//3 plays today
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		
+		//4 plays today
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		
+		//5 plays today -> this should fail because 5 songs have already been played
+		song.incrementPlayCount();
+		assertEquals(false, song.canPlayToday());
+	}
+
+	@Test
+	public void testSongPlayCountReset(){
+		Song song = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		song.incrementPlayCount();
+		assertEquals(false, song.canPlayToday());
+		song.clearPlaysToday();		//Reset
+		assertEquals(true, song.canPlayToday());
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		song.incrementPlayCount();
+		assertEquals(true, song.canPlayToday());
+		song.incrementPlayCount();
+		assertEquals(false, song.canPlayToday());
+	}
 }

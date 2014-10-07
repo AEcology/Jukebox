@@ -20,6 +20,7 @@ public class Song {
 		this.title = title;
 		this.songLengthSeconds = songLengthSeconds;
 		this.fileName = fileName;
+		this.playsToday = 0;
 	}
 	
 	public String getArtist(){
@@ -35,10 +36,7 @@ public class Song {
 		return fileName;
 	}
 	public boolean canPlayToday(){
-		return playsToday<5;
-	}
-	public void reset(){
-		playsToday = 0;
+		return playsToday < 5;
 	}
 	public void incrementPlayCount(){
 		++playsToday;
