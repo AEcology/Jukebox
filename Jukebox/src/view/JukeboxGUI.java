@@ -20,18 +20,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
-
-
-
-
-
-
-
-
-
 import model.Jukebox;
-//import model.Jukebox;
+import model.ModelMode;
 import model.SongCollection;
 
 
@@ -180,7 +170,7 @@ public class JukeboxGUI extends JFrame {
 			String userID = userNameField.getText();
 			String userPassword = passwordField.getText();
 			if (!jukebox.login(userID,  userPassword)){
-				//TODO: Print failure statement
+				//Print failure statement
 				System.out.println("Login unsuccessful");
 				return;
 			}

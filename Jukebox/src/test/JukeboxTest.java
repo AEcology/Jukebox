@@ -2,9 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
-import javax.swing.event.TableModelListener;
-
 import model.Jukebox;
+import model.ModelMode;
 import model.Song;
 import model.SongCollection;
 import model.SongQueue;
@@ -232,4 +231,24 @@ public class JukeboxTest {
 		Student ali = studentCollection.getStudent("Ali", "1111");
 		assertEquals(false, ali.hasTimeLeft(newSong));	
 	}
+	
+	
+///////////////////////ModelMode Enum Tests//////////////////////////
+	@Test
+	public void testEnumValues(){
+		String result = "";
+		for (ModelMode mode : ModelMode.values())
+			result += mode + " ";
+		assertEquals("PLAYMODE ACCOUNTMODE ", result);
+	}
+	@Test
+	public void testEnumValues2(){
+		String result = "";
+		for (ModelMode mode : ModelMode.values())
+			result += String.valueOf(mode.getValue());
+		assertEquals("01", result);
+	}	
+	
+	
+	
 }
