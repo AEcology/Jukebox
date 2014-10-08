@@ -19,7 +19,7 @@ public class SongCollection implements TableModel{
 	    add("FreePlay Music", "Determined Tumbao", 20, "DeterminedTumbao.mp3");
 	    add("Sun Microsystems", "Flute", 5, "flute.aif");
 	    add("Unknown", "Space Music", 6, "spacemusic.au");
-	    add("FreePlay Music", "Swing Cheese", 15, "StringCheese.mp3");
+	    add("FreePlay Music", "Swing Cheese", 15, "SwingCheese.mp3");
 	    add("Microsoft", "Tada", 2, "tada.wav");
 	    add("Pierre Langer", "Untameable Fire", 282, "UntameableFire.mp3");
 	}
