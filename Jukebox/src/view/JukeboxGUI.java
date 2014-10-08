@@ -34,6 +34,15 @@ import model.Jukebox;
 //import model.Jukebox;
 import model.SongCollection;
 
+
+/**
+ * Defines 2 different GUI views
+ * 	1-> Login screen for a Student
+ *  2-> Playlist screen
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
+ *
+ */
 @SuppressWarnings("serial")
 public class JukeboxGUI extends JFrame {
 
@@ -52,51 +61,21 @@ public class JukeboxGUI extends JFrame {
 	private LoginListener loginListener;
 	private LogoutListener logoutListener;
 	private AddSongListener addListener;
-	//private SongCollection songCollection;
 	private Banner feedback;
 	private TextUpdater textUpdater; 
 	
-	//Listener for JTable that interacts with the jukebox
-	class SongSelectionListener implements ListSelectionListener {
-		
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-
-			//Trigger on mouse depress only
-			/*if(table.getSelectionModel().getValueIsAdjusting() == false){
-				
-				//Getting row and col info
-				int rowIndex = table.getSelectedRow();
-				rowIndex = table.convertRowIndexToView(rowIndex);
-				int colIndex = 1;
-				
-				//Printing song title at that row and col
-				Object returns = table.getModel().getValueAt(rowIndex, colIndex);
-				System.out.println((String)returns);
-				//this adds song to queue
-				//Note: this returns a bool
-				jukebox.requestSong((String)returns);
-			}*/
-		}
-	}	
 	
 	public JukeboxGUI()
 	{
 		mode = ModelMode.ACCOUNTMODE; //Use ACCOUNTMODE for iteration 2
-		// Instantiate song collection
-	    //songCollection = new SongCollection();
 		jukebox = new Jukebox();
 	    feedback = new Banner();
 	
 		// Create JTable from song collection
 		table = new JTable(jukebox.getSongCollection());
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
-		
-		// Add Table listener
-	    table.getSelectionModel().addListSelectionListener(new SongSelectionListener()); 
-	   
+			   
 		// JFrame setup
-		//this.setLayout(new GridLayout(2, 1));
 	    this.setLayout(null);
 	    
 	    //Login screen things:
@@ -147,7 +126,7 @@ public class JukeboxGUI extends JFrame {
 		top.add(new JLabel("JukeBox")); 
 		songContainer.add(top, BorderLayout.NORTH);
 		
-		// Add appropriateJPanel to JFrame
+		// Add appropriate JPanel to JFrame
 		updateGUI();
 
 		// JFrame final setup
@@ -214,7 +193,7 @@ public class JukeboxGUI extends JFrame {
 			}
 		}	
 	}
-	//Reacts to "sign in" button
+	//Reacts to "log out" button
 	private class LogoutListener implements ActionListener{
 
 		@Override

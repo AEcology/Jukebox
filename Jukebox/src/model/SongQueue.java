@@ -10,8 +10,10 @@ import songplayer.EndOfSongListener;
 import songplayer.SongPlayer;
 
 /**
- * This class keeps a FIFO of the songs to be played. Contains a listener that listens for the end of the song
- * @author Jon
+ * This class keeps a FIFO of the songs to be played, and plays them until the FIFO is empty. Songs played sequentially without overlap. 
+ * 
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
  *
  */
 public class SongQueue {
@@ -44,13 +46,7 @@ public class SongQueue {
 	 */
 	private class ObjectWaitingForSongToEnd implements EndOfSongListener {
 
-		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
-//			System.out.print("Finished " + eosEvent.fileName());
-//			GregorianCalendar finishedAt = eosEvent.finishedTime();
-//			System.out.println(" at " + finishedAt.get(Calendar.HOUR_OF_DAY) + ":"
-//					+ finishedAt.get(Calendar.MINUTE) + ":"
-//					+ finishedAt.get(Calendar.SECOND));
-			
+		public void songFinishedPlaying(EndOfSongEvent eosEvent) {			
 			//Remove just played song from the stack, and start next song
 			pop();
 			if(!songQueue.isEmpty())

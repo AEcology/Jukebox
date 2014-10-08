@@ -8,6 +8,7 @@ import model.Jukebox;
 import model.Song;
 import model.SongCollection;
 import model.SongQueue;
+import model.Student;
 import model.StudentCollection;
 
 import org.junit.Test;
@@ -27,9 +28,9 @@ public class JukeboxTest {
 	public void testFeedbacks(){
 		Jukebox jukebox = new Jukebox();
 		jukebox.login("Ali", "1111");
-		assertTrue(jukebox.getSongCollection()!=null);
+		assertNotEquals(null, jukebox.getSongCollection());
 		assertTrue(jukebox.getLoggedStudent().getID().equals("Ali"));
-		assertTrue(jukebox.getStatus()!=null);
+		assertNotEquals(null, jukebox.getStatus());
 	}
 	
 	@Test
@@ -65,6 +66,7 @@ public class JukeboxTest {
 		assertEquals(jukebox.login("Ali", "1111"), true);
 		assertEquals(false, jukebox.requestSong("Blue Ridge ... Mist"));
 	}		
+
 	
 	/////////////////////Song Testing////////////////////
 	@Test
@@ -172,11 +174,6 @@ public class JukeboxTest {
 		songCollection.add("Microsoft", "Tada", 2, "tada.wav");
 		assertEquals(7, songCollection.getRowCount());
 	}
-
-	@Test
-	public void justNeedOneMorePercentCoverage(){
-			//TODO
-	}
 	
 	
 	///////////////////////SongQueue Tests/////////////////////////
@@ -193,11 +190,46 @@ public class JukeboxTest {
 		assertEquals(null, songQueue.peek());
 	}
 	
+	@Test
+	public void testSongEndListener(){
+		Jukebox jukebox = new Jukebox();
+		assertEquals(true, jukebox.login("Ali", "1111"));
+		jukebox.requestSong("Tada");
+
+	}
+	
 	
 	///////////////////StudentCollection Tests////////////////////
 	@Test
 	public void testClearSongsPlayedToday(){
-		//TODO
-
+		//Add some plays to a student, call reset, see what the current count is for that student
+		StudentCollection studentCollection = new StudentCollection();
+		Student ali = studentCollection.getStudent("Ali", "1111");
+		ali.incrementPlayCount();
+		assertEquals(1, ali.getPlayCount());
+		studentCollection.clearSongPlaysToday();
+		assertEquals(0, ali.getPlayCount());
 	}	
+	
+	
+	///////////////////////Student Tests//////////////////////////
+	@Test
+	public void testHasTimeLeft(){
+		StudentCollection studentCollection = new StudentCollection();
+		Student ali = studentCollection.getStudent("Ali", "1111");
+		Song song = new Song("Sun Microsystems", "Flute", 5, "flute.aif");
+		assertEquals(true, ali.hasTimeLeft(song));
+	}
+	
+	@Test
+	public void testStudentDoesNotHaveTimeLeft(){
+		SongCollection songCollection = new SongCollection();
+		StudentCollection studentCollection = new StudentCollection();
+		songCollection.add("NewSong", "NewSong", 90001, "tada.wav");
+		assertEquals(8, songCollection.getRowCount());
+		Song newSong = songCollection.getSong("NewSong");
+
+		Student ali = studentCollection.getStudent("Ali", "1111");
+		assertEquals(false, ali.hasTimeLeft(newSong));	
+	}
 }

@@ -2,6 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * A collection of Student objects to be used for the Jukebox Class. 
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
+ *
+ */
 public class StudentCollection {
 
 	ArrayList<Student> studentCollection;

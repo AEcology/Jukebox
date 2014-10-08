@@ -1,7 +1,7 @@
 package view;
 
 
-//Used by view to determine whether to display student GUI or playlist GUI
+//Used by view to determine whether to display student login GUI or playlist GUI
 public enum ModelMode {
 	PLAYMODE		(0),
 	ACCOUNTMODE		(1);

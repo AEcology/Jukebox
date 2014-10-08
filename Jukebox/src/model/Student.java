@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Class contains ID, password, playtime counts, and playtime seconds for a student
+ * Student contains ID, password, play counts, and play seconds. 
  * @author Jonathan Snavely
  * @author Anthony Rodriguez
  *

@@ -7,6 +7,14 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+/**
+ * This class simply holds a collection of songs for the jukebox. Contains standard collection methods. Implements the TableModel interface with the intention to be 
+ * displayed via JTable on a GUI.
+ * 
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
+ *
+ */
 public class SongCollection implements TableModel{
 	private ArrayList<Song> songs;
 	private LinkedList<TableModelListener> tableModelListeners;

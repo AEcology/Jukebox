@@ -3,6 +3,14 @@ package model;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * The Jukebox class contains a collection of songs, collection of student accounts, and a song queue. 
+ * To use the Jukebox, a user invokes the RequestSong method, which adds the requested song to the queue to be played if some criteria are met.
+ * 
+ * @author Jonathan Snavely
+ * @author Anthony Rodriguez
+ *
+ */
 public class Jukebox {
 	private Student loggedStudent;
 	private StudentCollection studentCollection;
@@ -12,14 +20,6 @@ public class Jukebox {
 	private String statusMessage;
 	private Song currSong;
 	
-	//update status text message at bottom of GUI
-	/*private void updateStatus(){
-		if (songQueue.peek()==null)
-			statusMessage = "Select a song to play!";
-		else{
-			statusMessage =  songQueue.peek().title + " added to queue";
-		}
-	}*/
 	
 	public SongCollection getSongCollection(){
 		return songCollection;
@@ -48,6 +48,8 @@ public class Jukebox {
 		loggedStudent = studentCollection.getStudent(ID, password);
 		if(loggedStudent == null)
 			return false;
+		
+		statusMessage = "Select a song to play!";
 		return true;
 	}
 		
