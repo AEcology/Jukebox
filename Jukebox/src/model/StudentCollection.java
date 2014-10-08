@@ -36,6 +36,7 @@ public class StudentCollection {
 		return null;
 	}
 
+	//Reset each of the student's play counts
 	public void clearSongPlaysToday() {
 		for(Student eachStudent: studentCollection){
 			eachStudent.clearSongPlaysToday();

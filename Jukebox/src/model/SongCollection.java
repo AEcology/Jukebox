@@ -49,6 +49,7 @@ public class SongCollection implements TableModel{
 		changed();
 	}
 	
+	//Updates the table listeners whenever a structural change to the table occurs
 	public void changed(){
 		for(TableModelListener l: tableModelListeners){
 			l.tableChanged(new TableModelEvent(this));
@@ -65,6 +66,7 @@ public class SongCollection implements TableModel{
 		return null;
 	}
 	
+	//Reset each of the song's play counts
 	public void clearSongPlaysToday() {
 		for(Song eachSong: songs){
 			eachSong.clearPlaysToday();

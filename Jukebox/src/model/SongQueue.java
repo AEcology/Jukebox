@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -25,6 +23,7 @@ public class SongQueue {
 		waiter = new ObjectWaitingForSongToEnd();
 	}
 	
+	//Add a song to the end of the queue
 	public void add(Song song){
 		songQueue.add(song);
 		
@@ -33,10 +32,12 @@ public class SongQueue {
 			SongPlayer.playFile(waiter, "./songfiles/" + song.getFileName());
 	}
 	
+	//Remove the head of the queue and return it
 	public Song pop(){
 		return songQueue.poll();
 	}
 	
+	//Look at the head of the queue without removing
 	public Song peek(){
 		return songQueue.peek();
 	}

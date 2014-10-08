@@ -18,13 +18,13 @@ public class Jukebox {
 	private SongCollection songCollection;
 	private GregorianCalendar dateLastPlayed; //used to reset new days
 	private String statusMessage;
-	private Song currSong;
 	
-	
+	//Returns the collection of songs available to play in the jukebox
 	public SongCollection getSongCollection(){
 		return songCollection;
 	}
 	
+	//Returns a string indicating the success of requesting a song
 	public String getStatus(){
 		return statusMessage;
 	}
@@ -32,7 +32,6 @@ public class Jukebox {
 	public Jukebox(){
 		statusMessage = "Select a song to play!";
 		loggedStudent = null;
-		currSong = null;
 		studentCollection = new StudentCollection();
 		songQueue = new SongQueue();
 		songCollection = new SongCollection();
@@ -44,6 +43,7 @@ public class Jukebox {
 		return loggedStudent;
 	}
 	
+	//Must be called to use any other jukebox functionality
 	public boolean login(String ID, String password){
 		loggedStudent = studentCollection.getStudent(ID, password);
 		if(loggedStudent == null)
@@ -53,6 +53,7 @@ public class Jukebox {
 		return true;
 	}
 		
+	//Called to allow another Student to use jukebox
 	public void logout(){
 		loggedStudent = null;
 	}
@@ -71,7 +72,6 @@ public class Jukebox {
 			
 		//Grab song from collection
 		Song toPlay = songCollection.getSong(name);
-		currSong = toPlay;
 		
 		//If song exists
 		if(toPlay == null)

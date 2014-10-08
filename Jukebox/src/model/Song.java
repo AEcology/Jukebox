@@ -26,21 +26,30 @@ public class Song {
 	public String getArtist(){
 		return artist;
 	}
+	
 	public String getTitle(){
 		return title;
 	}
+	
 	public int getSongLength(){
 		return songLengthSeconds;
 	}	
+	
+	//Returns the filename of the audio file. (i.e. example.mp3)
 	public String getFileName(){
 		return fileName;
 	}
+	
+	//Returns true if the Song has not been played 5 times
 	public boolean canPlayToday(){
 		return playsToday < 5;
 	}
+	
 	public void incrementPlayCount(){
 		++playsToday;
 	}
+	
+	//Reset of the song plays
 	public void clearPlaysToday(){
 		playsToday = 0;
 	}

@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Student contains ID, password, play counts, and play seconds. 
+ * Student contains ID, password, play counts, and play seconds. Students cannot play more than 90000 seconds over time, and cannot play more than 2 songs per day.
  * @author Jonathan Snavely
  * @author Anthony Rodriguez
  *
@@ -33,12 +33,16 @@ public class Student {
 	public void incrementPlayCount(){
 		++songsPlayedToday;
 	}
+	
+	//Add a song's time length to the student time played
 	public void updateUsage(Song toPlay) {
 		totalSecondsPlayed += toPlay.getSongLength();
 	}
 	public void clearSongPlaysToday() {
 		songsPlayedToday = 0;
 	}
+	
+	//Assess if playing the song will exceed the total time played limit
 	public boolean hasTimeLeft(Song toPlay) {
 		return totalSecondsPlayed + toPlay.getSongLength() < MAXPLAYTIME;
 	}
