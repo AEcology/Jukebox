@@ -41,6 +41,7 @@ public class JukeboxGUI extends JFrame {
 	private JTable table;
 	private JPanel songContainer;
 	private JPanel studentContainer; //Iteration2
+	private JButton playButton;
 	private Jukebox jukebox;
 	private JButton logoutButton;
 	private JButton loginButton;
@@ -50,6 +51,7 @@ public class JukeboxGUI extends JFrame {
 	private JLabel passwordPrompt;
 	private LoginListener loginListener;
 	private LogoutListener logoutListener;
+	private AddSongListener addListener;
 	//private SongCollection songCollection;
 	private Banner feedback;
 	private TextUpdater textUpdater; 
@@ -61,7 +63,7 @@ public class JukeboxGUI extends JFrame {
 		public void valueChanged(ListSelectionEvent e) {
 
 			//Trigger on mouse depress only
-			if(table.getSelectionModel().getValueIsAdjusting() == false){
+			/*if(table.getSelectionModel().getValueIsAdjusting() == false){
 				
 				//Getting row and col info
 				int rowIndex = table.getSelectedRow();
@@ -74,7 +76,7 @@ public class JukeboxGUI extends JFrame {
 				//this adds song to queue
 				//Note: this returns a bool
 				jukebox.requestSong((String)returns);
-			}
+			}*/
 		}
 	}	
 	
@@ -113,7 +115,7 @@ public class JukeboxGUI extends JFrame {
 	    //Buttons:
 	    logoutButton = new JButton("Logout");
 	    logoutButton.setSize(100, 20);
-	    logoutButton.setLocation(230, 230);
+	    logoutButton.setLocation(300, 230);
 	    logoutListener = new LogoutListener();
 	    logoutButton.addActionListener(logoutListener);
 	    
@@ -123,13 +125,18 @@ public class JukeboxGUI extends JFrame {
 	    loginListener = new LoginListener();
 	    loginButton.addActionListener(loginListener);
 	    
+	    playButton = new JButton("Add Song");
+	    playButton.setSize(100, 20);
+	    playButton.setLocation(170, 230);
+	    addListener = new AddSongListener();
+	    playButton.addActionListener(addListener);
 	    
-	    feedback.setSize(600, 110);
-	    feedback.setLocation(180,120);
+	    feedback.setSize(600, 200);
+	    feedback.setLocation(205,190);
 		// JPanel layout
 		songContainer = new JPanel();
 		songContainer.setLayout(new BorderLayout());
-		songContainer.setSize(500, 200);
+		songContainer.setSize(500, 165);
 		songContainer.setLocation(42,0);
 		
 		// Add Table to JPanel
@@ -162,6 +169,7 @@ public class JukeboxGUI extends JFrame {
 		this.remove(songContainer);
 		this.remove(feedback);
 		this.remove(logoutButton);
+		this.remove(playButton);
 		this.add(loginButton);
 		this.add(userNameField);
 		this.add(passwordField);
@@ -177,9 +185,11 @@ public class JukeboxGUI extends JFrame {
 		this.remove(passwordField);
 		this.remove(userNamePrompt);
 		this.remove(passwordPrompt);
+		this.add(playButton);
 		this.add(songContainer);
-		this.add(feedback);
 		this.add(logoutButton);
+		this.add(feedback);
+		feedback.repaint();
 		this.setVisible(true);
 	}
 	
@@ -192,14 +202,14 @@ public class JukeboxGUI extends JFrame {
 			String userPassword = passwordField.getText();
 			if (!jukebox.login(userID,  userPassword)){
 				//TODO: Print failure statement
-				System.out.println("DEBUG: Login unsuccessful");
+				System.out.println("Login unsuccessful");
 				return;
 			}
 			else{
 				userNameField.setText("");
 				passwordField.setText("");
 				mode = ModelMode.PLAYMODE;
-				System.out.println("DEBUG: Login successful");
+				System.out.println("Login successful");
 				updateGUI();
 			}
 		}	
@@ -212,6 +222,29 @@ public class JukeboxGUI extends JFrame {
 			jukebox.logout();
 			mode = ModelMode.ACCOUNTMODE;
 			updateGUI();
+		}	
+	}
+	
+	//Reacts to "Add Song" button
+	private class AddSongListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(table.getSelectionModel().getValueIsAdjusting() == false){
+				
+				//Getting row and col info
+				int rowIndex = table.getSelectedRow();
+				rowIndex = table.convertRowIndexToView(rowIndex);
+				int colIndex = 1;
+				
+				//Printing song title at that row and col
+				Object returns = table.getModel().getValueAt(rowIndex, colIndex);
+				System.out.println((String)returns);
+				//this adds song to queue
+				//Note: this returns a bool
+				jukebox.requestSong((String)returns);
+				drawPlaylistGUI();
+			}
 		}	
 	}
 	
@@ -228,7 +261,7 @@ public class JukeboxGUI extends JFrame {
 		@Override
 		protected void paintComponent(Graphics g){
 			super.paintComponent(g);
-			g.drawString(jukebox.getStatus(), 50, 100);
+			g.drawString(jukebox.getStatus(), 15, 10);
 		}
 	}
 	

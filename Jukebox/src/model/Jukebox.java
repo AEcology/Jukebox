@@ -13,13 +13,13 @@ public class Jukebox {
 	private Song currSong;
 	
 	//update status text message at bottom of GUI
-	private void updateStatus(){
+	/*private void updateStatus(){
 		if (songQueue.peek()==null)
 			statusMessage = "Select a song to play!";
 		else{
-			statusMessage = "Up next: " + songQueue.peek().title;
+			statusMessage =  songQueue.peek().title + " added to queue";
 		}
-	}
+	}*/
 	
 	public SongCollection getSongCollection(){
 		return songCollection;
@@ -69,22 +69,29 @@ public class Jukebox {
 			
 		//Grab song from collection
 		Song toPlay = songCollection.getSong(name);
+		currSong = toPlay;
 		
 		//If song exists
 		if(toPlay == null)
 			return false;
 		
 		//If song play limit reached
-		if(!toPlay.canPlayToday())
+		if(!toPlay.canPlayToday()){
+			statusMessage = "Limit per day exceeded!";
 			return false;
+		}
 		
 		//If user play limit reached
-		if(loggedStudent==null || !loggedStudent.canPlayToday())
+		if(loggedStudent==null || !loggedStudent.canPlayToday()){
+			statusMessage = "You can't play anymore today!";
 			return false;		
+		}
 		
 		//If user has enough time left to play
-		if(!loggedStudent.hasTimeLeft(toPlay))
+		if(!loggedStudent.hasTimeLeft(toPlay)){
+			statusMessage = "Max lifetime plays exceeded";
 			return false;
+		}
 		
 		//Add plays++ to song
 		toPlay.incrementPlayCount();
@@ -95,7 +102,7 @@ public class Jukebox {
 		
 		//Add the song to the queue
 		songQueue.add(toPlay);
-		
+		statusMessage = toPlay.title + " Added!";
 		return true;
 	}
 	

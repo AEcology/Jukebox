@@ -24,6 +24,15 @@ public class JukeboxTest {
 	}
 	
 	@Test
+	public void testFeedbacks(){
+		Jukebox jukebox = new Jukebox();
+		jukebox.login("Ali", "1111");
+		assertTrue(jukebox.getSongCollection()!=null);
+		assertTrue(jukebox.getLoggedStudent().getID().equals("Ali"));
+		assertTrue(jukebox.getStatus()!=null);
+	}
+	
+	@Test
 	public void testUserPlayLimit(){
 		Jukebox jukebox = new Jukebox();
 		jukebox.login("Ali", "1111");
