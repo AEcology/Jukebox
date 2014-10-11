@@ -234,17 +234,21 @@ public class JukeboxTest {
 	@Test
 	public void testStudentTimeLeftPrintout(){
 		Student student = new Student("Ali", "1111");
+		String expected = "Logged in as: Ali, Time left: 25:0:0, Song plays left today: 2";
+		assertEquals(expected, student.toString());	
 		
 		student.updateUsage(new Song("NewSong", "NewSong", 50, "tada.wav"));
-		String expected = "Logged in as: Ali, Time left: 24:59:10, Songs played today: 0";
+		student.incrementPlayCount();
+		expected = "Logged in as: Ali, Time left: 24:59:10, Song plays left today: 1";
 		assertEquals(expected, student.toString());	
 		
 		student.updateUsage(new Song("NewSong", "NewSong", 3600, "tada.wav"));
-		expected = "Logged in as: Ali, Time left: 23:59:10, Songs played today: 0";
+		student.incrementPlayCount();
+		expected = "Logged in as: Ali, Time left: 23:59:10, Song plays left today: 0";
 		assertEquals(expected, student.toString());	
 		
 		student.updateUsage(new Song("NewSong", "NewSong", 180, "tada.wav"));
-		expected = "Logged in as: Ali, Time left: 23:56:10, Songs played today: 0";
+		expected = "Logged in as: Ali, Time left: 23:56:10, Song plays left today: 0";
 		assertEquals(expected, student.toString());		
 	}
 	

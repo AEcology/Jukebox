@@ -61,6 +61,7 @@ public class Student {
 	}
 	
 	public String toString(){
-		return "Logged in as: " + ID + ", Time left: " + timeFormatting() + ", Songs played today: " + songsPlayedToday;
+		int songsPlaysLeftToday = 2 - songsPlayedToday;
+		return "Logged in as: " + ID + ", Time left: " + timeFormatting() + ", Song plays left today: " + songsPlaysLeftToday;
 	}
 }

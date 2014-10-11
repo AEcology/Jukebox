@@ -45,7 +45,6 @@ public class JukeboxGUI extends JFrame {
 	private JButton loginButton;
 	private JTextField userNameField;
 	private JPasswordField passwordField;
-	private Banner feedback;
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
 	private JPanel credentialsContainer;
@@ -61,17 +60,17 @@ public class JukeboxGUI extends JFrame {
 		songContainer = new JPanel();
 		songContainer.setLayout(new BoxLayout(songContainer, BoxLayout.X_AXIS));
 		songContainer.setSize(600, 400);
-		songContainer.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		songContainer.setLocation(50, 0);
 		songList = new JList<Song>(jukebox.getSongQueue());
 		songContainer.add(new JScrollPane(songList));
-		songContainer.add(Box.createRigidArea(new Dimension(5,0)));
+		songContainer.add(Box.createRigidArea(new Dimension(5,0)));	//Gap
 		songContainer.add(new JScrollPane(table));
 		add(songContainer);
 					   		    
 	    //Username and Password setup
 	    credentialsContainer = new JPanel();
-	    credentialsContainer.setSize(220,  50);
-	    credentialsContainer.setLocation(350, 500);
+	    credentialsContainer.setSize(220, 50);
+	    credentialsContainer.setLocation(240, 500);
 	    credentialsContainer.setLayout(new GridLayout(2, 2));
 	    usernameLabel = new JLabel("Username");
 	    usernameLabel.setHorizontalAlignment(SwingConstants.CENTER );
@@ -88,28 +87,22 @@ public class JukeboxGUI extends JFrame {
 	    //Login Button setup
 	    loginButton = new JButton("Login");
 	    loginButton.setSize(100, 30);
-	    loginButton.setLocation(400,  570);
+	    loginButton.setLocation(240,  570);
 	    loginButton.addActionListener(new LoginListener());
 	    add(loginButton);
 
 	    //Play Song button setup
 	    playButton = new JButton("Add Song");
-	    playButton.setSize(100, 20);
-	    playButton.setLocation(500,  570);
+	    playButton.setSize(100, 30);
+	    playButton.setLocation(350,  570);
 	    playButton.addActionListener(new AddSongListener());
 	    add(playButton);
 	    
 	    //Feedback banner setup
-	    jukeStatus = new JLabel(jukebox.getStatus());
-	    jukeStatus.setLocation(350, 480);
+	    jukeStatus = new JLabel("Login to access jukebox!");
+	    jukeStatus.setLocation(240, 480);
 	    jukeStatus.setSize(400, 20);
-	    add(jukeStatus);
-	    
-	    feedback = new Banner();
-	    feedback.setSize(400, 100);
-	    feedback.setLocation(0, 600);
-	    add(feedback);
-	    feedback.repaint();
+	    add(jukeStatus);	    
 
 		// JFrame final setup
 	    this.setLayout(null);
