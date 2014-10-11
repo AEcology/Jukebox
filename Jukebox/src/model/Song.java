@@ -53,4 +53,9 @@ public class Song {
 	public void clearPlaysToday(){
 		playsToday = 0;
 	}
+	
+	//Invoked by the JList to display contents
+	public String toString(){
+		return getTitle();
+	}
 }
