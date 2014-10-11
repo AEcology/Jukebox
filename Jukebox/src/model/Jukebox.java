@@ -24,6 +24,11 @@ public class Jukebox {
 		return songCollection;
 	}
 	
+	//Returns the song queue
+	public SongQueue getSongQueue(){
+		return songQueue;
+	}
+	
 	//Returns a string indicating the success of requesting a song
 	public String getStatus(){
 		return statusMessage;

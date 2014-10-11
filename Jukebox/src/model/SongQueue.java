@@ -3,6 +3,10 @@ package model;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+
 import songplayer.EndOfSongEvent;
 import songplayer.EndOfSongListener;
 import songplayer.SongPlayer;
@@ -14,18 +18,21 @@ import songplayer.SongPlayer;
  * @author Anthony Rodriguez
  *
  */
-public class SongQueue {
-	Queue<Song> songQueue;
-	ObjectWaitingForSongToEnd waiter;
+public class SongQueue implements ListModel<Song>{
+	private Queue<Song> songQueue;
+	private ObjectWaitingForSongToEnd waiter;
+	private LinkedList<ListDataListener> listDataListeners;
 	
 	public SongQueue(){
 		songQueue = new LinkedList<Song>();
 		waiter = new ObjectWaitingForSongToEnd();
+		listDataListeners = new LinkedList<ListDataListener>();
 	}
 	
 	//Add a song to the end of the queue
 	public void add(Song song){
 		songQueue.add(song);
+		changed();
 		
 		//If no song currently playing, play the song just added
 		if(songQueue.size() == 1)
@@ -34,6 +41,7 @@ public class SongQueue {
 	
 	//Remove the head of the queue and return it
 	public Song pop(){
+		changed();
 		return songQueue.poll();
 	}
 	
@@ -42,6 +50,13 @@ public class SongQueue {
 		return songQueue.peek();
 	}
 	
+	public void changed(){
+		for(ListDataListener l: listDataListeners){
+			l.contentsChanged(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, songQueue.size()));
+		}	
+	}	
+	
+
 	/**
 	 * A Listener that is called when a song ends. Starts up next song if one exists
 	 */
@@ -53,5 +68,27 @@ public class SongQueue {
 			if(!songQueue.isEmpty())
 				SongPlayer.playFile(waiter, "./songfiles/" + peek().getFileName());	
 		}
+	}
+
+	
+	///////////////ListModel Interface//////////////
+	@Override
+	public int getSize() {
+		return songQueue.size();
+	}
+
+	@Override
+	public Song getElementAt(int index) {
+		return songQueue.peek();
+	}
+
+	@Override
+	public void addListDataListener(ListDataListener l) {
+		listDataListeners.add(l);
+	}
+
+	@Override
+	public void removeListDataListener(ListDataListener l) {
+		listDataListeners.remove(l);
 	}
 }

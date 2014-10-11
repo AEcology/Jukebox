@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,13 +10,19 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
@@ -23,6 +31,8 @@ import javax.swing.table.TableRowSorter;
 import model.Jukebox;
 import model.ModelMode;
 import model.SongCollection;
+import model.Student;
+import model.Song;
 
 
 /**
@@ -38,159 +48,170 @@ public class JukeboxGUI extends JFrame {
 
 	private ModelMode mode;
 	private JTable table;
+	private JList<Song> songList;
+	
 	private JPanel songContainer;
+	private JPanel queueContainer;
+	
 	private JPanel studentContainer; //Iteration2
 	private JButton playButton;
 	private Jukebox jukebox;
 	private JButton logoutButton;
 	private JButton loginButton;
 	private JTextField userNameField;
-	private JTextField passwordField;
+	private JPasswordField passwordField;
 	private JLabel userNamePrompt;
 	private JLabel passwordPrompt;
 	private LoginListener loginListener;
-	private LogoutListener logoutListener;
+	//private LogoutListener logoutListener;
 	private AddSongListener addListener;
 	private Banner feedback;
 	private TextUpdater textUpdater; 
+	private JLabel usernameLabel;
+	private JLabel passwordLabel;
+	JPanel credentialsContainer;
+	
 	
 	
 	public JukeboxGUI()
 	{
-		mode = ModelMode.ACCOUNTMODE; //Use ACCOUNTMODE for iteration 2
+		//mode = ModelMode.ACCOUNTMODE; //Use ACCOUNTMODE for iteration 2
 		jukebox = new Jukebox();
-	    feedback = new Banner();
-	
-		// Create JTable from song collection
+	    
+		// JTable song collection setup
 		table = new JTable(jukebox.getSongCollection());
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
-			   
+		songContainer = new JPanel();
+		songContainer.setLayout(new BoxLayout(songContainer, BoxLayout.X_AXIS));
+		songContainer.setSize(600, 400);
+		songContainer.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+		songList = new JList<Song>(jukebox.getSongQueue());
+		songContainer.add(new JScrollPane(songList));
+		songContainer.add(Box.createRigidArea(new Dimension(5,0)));
+		songContainer.add(new JScrollPane(table));
+		add(songContainer);
+					   
+		// JList queue setup
+//		queueContainer = new JPanel();
+		
 		// JFrame setup
 	    this.setLayout(null);
 	    
-	    //Login screen things:
-	    userNamePrompt = new JLabel("User name:");
-	    userNamePrompt.setSize(200, 30);
-	    userNamePrompt.setLocation(200, 70);
-	    userNameField = new JTextField();
-	    userNameField.setSize(200, 30);
-	    userNameField.setLocation(290, 70);
-	    passwordPrompt = new JLabel("Password:");
-	    passwordPrompt.setSize(200, 30);
-	    passwordPrompt.setLocation(200, 110);
-	    passwordField = new JTextField();
-	    passwordField.setSize(200, 30);
-	    passwordField.setLocation(290, 110);
-	    //Buttons:
-	    logoutButton = new JButton("Logout");
-	    logoutButton.setSize(100, 20);
-	    logoutButton.setLocation(300, 230);
-	    logoutListener = new LogoutListener();
-	    logoutButton.addActionListener(logoutListener);
+	    //Username and Password Stuff
+	    credentialsContainer = new JPanel();
+	    credentialsContainer.setSize(220,  50);
+	    credentialsContainer.setLocation(350, 500);
+	    credentialsContainer.setLayout(new GridLayout(2, 2));
+	    usernameLabel = new JLabel("Username");
+	    usernameLabel.setHorizontalAlignment(SwingConstants.CENTER );
+	    userNameField = new JTextField();    
+	    passwordLabel = new JLabel("Password");
+	    passwordLabel.setHorizontalAlignment(SwingConstants.CENTER );
+	    passwordField = new JPasswordField();
+	    credentialsContainer.add(usernameLabel);
+	    credentialsContainer.add(userNameField);
+	    credentialsContainer.add(passwordLabel);
+	    credentialsContainer.add(passwordField);
+	    add(credentialsContainer);
 	    
-	    loginButton = new JButton("Sign In");
-	    loginButton.setSize(100, 20);
-	    loginButton.setLocation(230, 230);
-	    loginListener = new LoginListener();
-	    loginButton.addActionListener(loginListener);
-	    
+	    //Login Button setup
+	    loginButton = new JButton("Login");
+	    loginButton.setSize(100, 30);
+	    loginButton.setLocation(400,  570);
+	    loginButton.addActionListener(new LoginListener());
+	    add(loginButton);
+
+	    //Play Song button setup
 	    playButton = new JButton("Add Song");
 	    playButton.setSize(100, 20);
-	    playButton.setLocation(170, 230);
-	    addListener = new AddSongListener();
-	    playButton.addActionListener(addListener);
+	    playButton.setLocation(500,  570);
+	    playButton.addActionListener(new AddSongListener());
+	    add(playButton);
 	    
+	    //Feedback banner setup
+	    feedback = new Banner();
 	    feedback.setSize(600, 200);
 	    feedback.setLocation(205,190);
-		// JPanel layout
-		songContainer = new JPanel();
-		songContainer.setLayout(new BorderLayout());
-		songContainer.setSize(500, 165);
-		songContainer.setLocation(42,0);
-		
-		// Add Table to JPanel
-		songContainer.add(new JScrollPane(table), BorderLayout.CENTER);
-	
-		// Add Label to JPanel
-		JPanel top = new JPanel();
-		top.add(new JLabel("JukeBox")); 
-		songContainer.add(top, BorderLayout.NORTH);
-		
-		// Add appropriate JPanel to JFrame
-		updateGUI();
+	    
+	   
+//		// Add Label to JPanel
+//		JPanel top = new JPanel();
+//		top.add(new JLabel("JukeBox")); 
+//		songContainer.add(top, BorderLayout.NORTH);
+//		
+//		// Add appropriate JPanel to JFrame
+//		updateGUI();
 
 		// JFrame final setup
-		this.setSize(600, 300);
+		this.setSize(700, 700);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);	
 	}
 	
 	//The next three methods are used to switch between GUI windows
-	private void updateGUI(){
-		if (mode==ModelMode.ACCOUNTMODE)
-			drawAccountGUI();
-		else
-			drawPlaylistGUI();
-	}
-	
-	private void drawAccountGUI(){
-		this.setVisible(false);
-		this.remove(songContainer);
-		this.remove(feedback);
-		this.remove(logoutButton);
-		this.remove(playButton);
-		this.add(loginButton);
-		this.add(userNameField);
-		this.add(passwordField);
-		this.add(userNamePrompt);
-		this.add(passwordPrompt);
-		this.setVisible(true);
-	}
-	
-	private void drawPlaylistGUI(){
-		this.setVisible(false);
-		this.remove(loginButton);
-		this.remove(userNameField);
-		this.remove(passwordField);
-		this.remove(userNamePrompt);
-		this.remove(passwordPrompt);
-		this.add(playButton);
-		this.add(songContainer);
-		this.add(logoutButton);
-		this.add(feedback);
-		feedback.repaint();
-		this.setVisible(true);
-	}
+//	private void updateGUI(){
+//		if (mode==ModelMode.ACCOUNTMODE)
+//			drawAccountGUI();
+//		else
+//			drawPlaylistGUI();
+//	}
+//	
+//	private void drawAccountGUI(){
+//		this.setVisible(false);
+//		this.remove(songContainer);
+//		this.remove(feedback);
+//		this.remove(logoutButton);
+//		this.remove(playButton);
+//		this.add(loginButton);
+//		this.add(userNameField);
+//		this.add(passwordField);
+//		this.add(userNamePrompt);
+//		this.add(passwordPrompt);
+//		this.setVisible(true);
+//	}
+//	
+//	private void drawPlaylistGUI(){
+//		this.setVisible(false);
+//		this.remove(loginButton);
+//		this.remove(userNameField);
+//		this.remove(passwordField);
+//		this.remove(userNamePrompt);
+//		this.remove(passwordPrompt);
+//		this.add(playButton);
+//		this.add(songContainer);
+//		this.add(logoutButton);
+//		this.add(feedback);
+//		feedback.repaint();
+//		this.setVisible(true);
+//	}
 	
 	//Reacts to "sign in" button
 	private class LoginListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String userID = userNameField.getText();
-			String userPassword = passwordField.getText();
-			if (!jukebox.login(userID,  userPassword)){
+			if(loginButton.getText()== "Login"){
+				String userID = userNameField.getText();
+				String userPassword = new String(passwordField.getPassword());
+					
 				//Print failure statement
-				System.out.println("Login unsuccessful");
-				return;
+				if (!jukebox.login(userID,  userPassword)){
+					System.out.println("Login unsuccessful");
+					return;
+				}
+				else{
+					userNameField.setText("");
+					passwordField.setText("");
+					System.out.println("Login successful");
+					loginButton.setText("Logout");
+					//feedback.repaint();
+				}			
 			}
-			else{
-				userNameField.setText("");
-				passwordField.setText("");
-				mode = ModelMode.PLAYMODE;
-				System.out.println("Login successful");
-				updateGUI();
+			else if(loginButton.getText()== "Logout"){
+				jukebox.logout();
+				System.out.println("Logout successful");
+				loginButton.setText("Login");
 			}
-		}	
-	}
-	//Reacts to "log out" button
-	private class LogoutListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			jukebox.logout();
-			mode = ModelMode.ACCOUNTMODE;
-			updateGUI();
 		}	
 	}
 	
@@ -203,6 +224,9 @@ public class JukeboxGUI extends JFrame {
 				
 				//Getting row and col info
 				int rowIndex = table.getSelectedRow();
+				if(rowIndex == -1)	//Edge case - no row selected on table
+					return;
+				
 				rowIndex = table.convertRowIndexToView(rowIndex);
 				int colIndex = 1;
 				
@@ -212,7 +236,7 @@ public class JukeboxGUI extends JFrame {
 				//this adds song to queue
 				//Note: this returns a bool
 				jukebox.requestSong((String)returns);
-				drawPlaylistGUI();
+				//drawPlaylistGUI();
 			}
 		}	
 	}
