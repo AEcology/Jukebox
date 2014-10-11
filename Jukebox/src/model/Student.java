@@ -1,5 +1,7 @@
 package model;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Student contains ID, password, play counts, and play seconds. Students cannot play more than 90000 seconds over time, and cannot play more than 2 songs per day.
  * @author Jonathan Snavely
@@ -45,5 +47,20 @@ public class Student {
 	//Assess if playing the song will exceed the total time played limit
 	public boolean hasTimeLeft(Song toPlay) {
 		return totalSecondsPlayed + toPlay.getSongLength() < MAXPLAYTIME;
+	}
+	
+	//Helper method used for formating time remaining in toString method
+	private String timeFormatting(){ 
+		int leftoverSeconds;
+		int totalSecondsLeft = MAXPLAYTIME - totalSecondsPlayed;	
+		int hours = Math.round(totalSecondsLeft/3600);
+		leftoverSeconds = totalSecondsLeft - hours*3600;
+		int minutes = Math.round(leftoverSeconds/ 60);
+		leftoverSeconds -= minutes*60;
+		return (hours + ":" + minutes + ":" + leftoverSeconds);
+	}
+	
+	public String toString(){
+		return "Logged in as: " + ID + ", Time left: " + timeFormatting() + ", Songs played today: " + songsPlayedToday;
 	}
 }

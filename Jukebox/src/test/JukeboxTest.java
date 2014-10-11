@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.*;
-
 import model.Jukebox;
 import model.ModelMode;
 import model.Song;
@@ -232,6 +231,22 @@ public class JukeboxTest {
 		assertEquals(false, ali.hasTimeLeft(newSong));	
 	}
 	
+	@Test
+	public void testStudentTimeLeftPrintout(){
+		Student student = new Student("Ali", "1111");
+		
+		student.updateUsage(new Song("NewSong", "NewSong", 50, "tada.wav"));
+		String expected = "Logged in as: Ali, Time left: 24:59:10, Songs played today: 0";
+		assertEquals(expected, student.toString());	
+		
+		student.updateUsage(new Song("NewSong", "NewSong", 3600, "tada.wav"));
+		expected = "Logged in as: Ali, Time left: 23:59:10, Songs played today: 0";
+		assertEquals(expected, student.toString());	
+		
+		student.updateUsage(new Song("NewSong", "NewSong", 180, "tada.wav"));
+		expected = "Logged in as: Ali, Time left: 23:56:10, Songs played today: 0";
+		assertEquals(expected, student.toString());		
+	}
 	
 ///////////////////////ModelMode Enum Tests//////////////////////////
 	@Test
