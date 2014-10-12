@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * The Song class contains the name of the song, how many times it has played on a given day, and the length
  * of the song.
@@ -8,7 +10,7 @@ package model;
  * @author Anthony Rodriguez
  *
  */
-public class Song {
+public class Song implements Serializable{
 	String artist;
 	String title;
 	String fileName;
@@ -29,6 +31,10 @@ public class Song {
 	
 	public String getTitle(){
 		return title;
+	}
+	
+	public int getPlaysLeft(){
+		return 5-playsToday;
 	}
 	
 	public int getSongLength(){

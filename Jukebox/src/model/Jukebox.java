@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,13 +12,21 @@ import java.util.GregorianCalendar;
  * @author Anthony Rodriguez
  *
  */
-public class Jukebox {
+public class Jukebox{
 	private Student loggedStudent;
 	private StudentCollection studentCollection;
 	private SongQueue songQueue;
 	private SongCollection songCollection;
 	private GregorianCalendar dateLastPlayed; //used to reset new days
 	private String statusMessage;
+	
+	public StudentCollection getStudents(){
+		return studentCollection;
+	}
+	
+	public GregorianCalendar getDateLastPlayed(){
+		return dateLastPlayed;
+	}
 	
 	//Returns the collection of songs available to play in the jukebox
 	public SongCollection getSongCollection(){
@@ -35,7 +44,7 @@ public class Jukebox {
 	}
 	
 	public Jukebox(){
-		statusMessage = "Select a song to play!";
+		statusMessage = "No data loaded. Select a song to play!";
 		loggedStudent = null;
 		studentCollection = new StudentCollection();
 		songQueue = new SongQueue();
@@ -43,6 +52,17 @@ public class Jukebox {
 		dateLastPlayed = new GregorianCalendar();
 	}
 	
+	//Constructor used for loaded data
+	public Jukebox(GregorianCalendar date, SongCollection songs, StudentCollection students) {
+		// TODO Auto-generated constructor stub
+		statusMessage = "Data loaded. Select a song to play!";
+		loggedStudent = null;
+		studentCollection = students;
+		songQueue = new SongQueue();
+		songCollection = songs;
+		dateLastPlayed = date;
+	}
+
 	//Returns logged in student (just used by model to see if anyone is logged in)
 	public Student getLoggedStudent(){
 		return loggedStudent;

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @author Anthony Rodriguez
  *
  */
-public class Student {
+public class Student implements Serializable {
 
 	private String ID;
 	private String password;

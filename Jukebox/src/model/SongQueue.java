@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,7 +19,7 @@ import songplayer.SongPlayer;
  * @author Anthony Rodriguez
  *
  */
-public class SongQueue implements ListModel<Song>{
+public class SongQueue implements ListModel<Song>, Serializable{
 	private Queue<Song> songQueue;
 	private ObjectWaitingForSongToEnd waiter;
 	private LinkedList<ListDataListener> listDataListeners;

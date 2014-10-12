@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -15,7 +16,7 @@ import javax.swing.table.TableModel;
  * @author Anthony Rodriguez
  *
  */
-public class SongCollection implements TableModel{
+public class SongCollection implements TableModel, Serializable{
 	private ArrayList<Song> songs;
 	private LinkedList<TableModelListener> tableModelListeners;
 
@@ -80,7 +81,7 @@ public class SongCollection implements TableModel{
 	}
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return 4;
 	}
 	@Override
 	public String getColumnName(int columnIndex) {
@@ -91,6 +92,8 @@ public class SongCollection implements TableModel{
 			return "Title";	
 		case 2:
 			return "Seconds";
+		case 3:
+			return "Plays left";
 		}
 		return null;
 	}
@@ -102,6 +105,8 @@ public class SongCollection implements TableModel{
 		case 1:
 			return String.class;	
 		case 2:
+			return Integer.class;
+		case 3:
 			return Integer.class;
 		}
 		return null;
@@ -116,6 +121,7 @@ public class SongCollection implements TableModel{
 		case 0: return songs.get(rowIndex).getArtist();
 		case 1: return songs.get(rowIndex).getTitle();	
 		case 2: return songs.get(rowIndex).getSongLength();
+		case 3: return songs.get(rowIndex).getPlaysLeft();
 		}
 		return null;
 	}

@@ -6,6 +6,15 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.GregorianCalendar;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -24,6 +34,8 @@ import javax.swing.table.TableRowSorter;
 
 import model.Jukebox;
 import model.Song;
+import model.SongCollection;
+import model.StudentCollection;
 
 
 /**
@@ -52,7 +64,8 @@ public class JukeboxGUI extends JFrame {
 	
 	public JukeboxGUI()
 	{
-		jukebox = new Jukebox();
+		if (!loadData())
+			jukebox = new Jukebox();
 	    
 		// JTable and JList song collection setup
 		table = new JTable(jukebox.getSongCollection());
@@ -100,7 +113,7 @@ public class JukeboxGUI extends JFrame {
 	    
 	    //Feedback banner setup
 	    jukeStatus = new JLabel("Login to access jukebox!");
-	    jukeStatus.setLocation(240, 480);
+	    jukeStatus.setLocation(235, 470);
 	    jukeStatus.setSize(400, 20);
 	    add(jukeStatus);	    
 
@@ -109,6 +122,7 @@ public class JukeboxGUI extends JFrame {
 		this.setSize(700, 700);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);	
+		this.addWindowListener(new SaveListener());
 	}
 	
 	//Reacts to "sign in" button
@@ -129,12 +143,16 @@ public class JukeboxGUI extends JFrame {
 				else{
 					userNameField.setText("");
 					passwordField.setText("");
+					userNameField.disable();
+					passwordField.disable();
 					System.out.println("Login successful");
 					loginButton.setText("Logout");
 					jukeStatus.setText(jukebox.getLoggedStudent().toString());
 				}			
 			}
 			else if(loginButton.getText()== "Logout"){
+				userNameField.enable();
+				passwordField.enable();
 				jukeStatus.setText(jukebox.getLoggedStudent().getID() + " logged out");
 				jukebox.logout();
 				System.out.println("Logout successful");
@@ -177,6 +195,95 @@ public class JukeboxGUI extends JFrame {
 //			g.drawString(jukebox.getStatus(), 0, 0);
 //		}
 //	}
+	
+	private class SaveListener implements WindowListener{
+
+		@Override
+		public void windowActivated(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			// TODO Auto-generated method stub
+			saveData();
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	//Save order: date -> songCollection -> studentRecord
+	public void saveData(){
+		try{
+			FileOutputStream outFS = new FileOutputStream(new File("savedata.dat"));
+			ObjectOutputStream outObj = new ObjectOutputStream(outFS);
+			outObj.writeObject(jukebox.getDateLastPlayed());
+			outObj.writeObject(jukebox.getSongCollection());
+			outObj.writeObject(jukebox.getStudents());
+			outObj.close();
+			outFS.close();
+			System.out.println("State saved");
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean loadData() {
+		// TODO 2: implement loadData
+	
+		try {
+			File inputFile = new File("savedata.dat");
+			if (!inputFile.exists() || inputFile.isDirectory()){
+				System.out.println("No data to load!");
+				return false;
+			}
+			FileInputStream inFS = new FileInputStream(inputFile);
+			ObjectInputStream inObject = new ObjectInputStream(inFS);
+			GregorianCalendar date = (GregorianCalendar) inObject.readObject();
+			SongCollection songs = (SongCollection) inObject.readObject();
+			StudentCollection students = (StudentCollection) inObject.readObject();
+			jukebox = new Jukebox(date, songs, students);
+			inObject.close();
+			inFS.close();
+		} catch (Exception e) {
+			System.out.println("No loaded data!");
+			return false;
+		}
+		
+		return true;
+	}
 	
 	public static void main(String[] args){
 		new JukeboxGUI();
