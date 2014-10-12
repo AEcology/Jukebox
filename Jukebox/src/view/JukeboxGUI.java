@@ -169,14 +169,14 @@ public class JukeboxGUI extends JFrame {
 		}	
 	}
 	
-	private class Banner extends JPanel{
-		@Override
-		protected void paintComponent(Graphics g){
-			g.setColor(Color.red);
-			super.paintComponent(g);
-			g.drawString(jukebox.getStatus(), 0, 0);
-		}
-	}
+//	private class Banner extends JPanel{
+//		@Override
+//		protected void paintComponent(Graphics g){
+//			g.setColor(Color.red);
+//			super.paintComponent(g);
+//			g.drawString(jukebox.getStatus(), 0, 0);
+//		}
+//	}
 	
 	public static void main(String[] args){
 		new JukeboxGUI();
