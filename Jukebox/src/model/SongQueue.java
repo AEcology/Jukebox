@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -80,7 +81,12 @@ public class SongQueue implements ListModel<Song>, Serializable{
 
 	@Override
 	public Song getElementAt(int index) {
-		return songQueue.peek();
+		Iterator<Song> it = songQueue.iterator();
+		Song obj = null;
+		for(int i=-1; i<index; ++i)
+			obj = it.next();
+		return obj;
+		//return songQueue.peek();
 	}
 
 	@Override

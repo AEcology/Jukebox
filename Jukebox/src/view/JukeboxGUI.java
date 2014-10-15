@@ -181,8 +181,9 @@ public class JukeboxGUI extends JFrame {
 				System.out.println((String)returns);
 				//this adds song to queue
 				Boolean bool = jukebox.requestSong((String)returns);
-				if(bool)
+				if(bool){
 					jukeStatus.setText(jukebox.getLoggedStudent().toString());
+				}
 			}
 		}	
 	}
@@ -213,7 +214,10 @@ public class JukeboxGUI extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
-			saveData();
+			int ans = JOptionPane.showConfirmDialog(null,  "Save data?", "Save", JOptionPane.YES_NO_OPTION);
+			if(ans == JOptionPane.YES_OPTION){
+				saveData();
+			}	
 		}
 
 		@Override
@@ -263,6 +267,10 @@ public class JukeboxGUI extends JFrame {
 	public boolean loadData() {
 		// TODO 2: implement loadData
 	
+		int ans = JOptionPane.showConfirmDialog(null,  "Load data?", "Load", JOptionPane.YES_NO_OPTION);
+		if(ans == JOptionPane.NO_OPTION){
+			return false;
+		}
 		try {
 			File inputFile = new File("savedata.dat");
 			if (!inputFile.exists() || inputFile.isDirectory()){
