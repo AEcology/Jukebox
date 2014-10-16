@@ -184,19 +184,14 @@ public class JukeboxGUI extends JFrame {
 				if(bool){
 					jukeStatus.setText(jukebox.getLoggedStudent().toString());
 				}
+				else
+					jukeStatus.setText(jukebox.getStatus());
 			}
 		}	
 	}
 	
-//	private class Banner extends JPanel{
-//		@Override
-//		protected void paintComponent(Graphics g){
-//			g.setColor(Color.red);
-//			super.paintComponent(g);
-//			g.drawString(jukebox.getStatus(), 0, 0);
-//		}
-//	}
-	
+
+	//Methods for implementing save dialogs/calls
 	private class SaveListener implements WindowListener{
 
 		@Override
@@ -263,6 +258,10 @@ public class JukeboxGUI extends JFrame {
 		
 	}
 	
+	/**
+	 * Load serializable saved data state from previous session
+	 * @return boolean
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean loadData() {
 		// TODO 2: implement loadData

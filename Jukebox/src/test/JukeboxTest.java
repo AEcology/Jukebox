@@ -12,6 +12,7 @@ import model.StudentCollection;
 import org.junit.Test;
 
 //Attempting to Simulate the possible interactions between the jukebox and the GUI
+//Author: Jonathan Snavely
 public class JukeboxTest {
 
 	///////////////////Jukebox Testing/////////////////

@@ -17,6 +17,9 @@ public class Song implements Serializable{
 	int songLengthSeconds;
 	int playsToday;
 	
+	/**
+	 * Constructor with initializations
+	 */
 	public Song(String artist, String title, int songLengthSeconds, String fileName){
 		this.artist = artist;
 		this.title = title;

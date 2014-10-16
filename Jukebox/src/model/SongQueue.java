@@ -86,7 +86,6 @@ public class SongQueue implements ListModel<Song>, Serializable{
 		for(int i=-1; i<index; ++i)
 			obj = it.next();
 		return obj;
-		//return songQueue.peek();
 	}
 
 	@Override

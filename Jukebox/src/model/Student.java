@@ -41,6 +41,9 @@ public class Student implements Serializable {
 	public void updateUsage(Song toPlay) {
 		totalSecondsPlayed += toPlay.getSongLength();
 	}
+	/**
+	 * By convention, is called by model when it decides that a new day has occured
+	 */
 	public void clearSongPlaysToday() {
 		songsPlayedToday = 0;
 	}
